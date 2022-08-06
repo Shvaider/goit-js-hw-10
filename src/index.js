@@ -1,11 +1,11 @@
 import Notiflix, { Notify } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
 import { debounce } from 'lodash';
-import { generateContentList } from './js/marupList';
+import { generateContentList } from './js/markupList';
 
 import './css/styles.css';
-import fetchCountries from './fetchCountries';
-import { createCardRef } from './js/marupCard';
+import { fetchCountries } from './fetchCountries';
+import { createCardRef } from './js/markupCard';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -19,12 +19,12 @@ inputRef.addEventListener(
 );
 
 function handleSearchCountries(e) {
-  const inputValue = e.target.value;
-  if (!inputValue) {
+  const value = e.target.value.trim();
+  if (!value) {
     return;
   }
-  fetchCountries(inputValue.trim())
-    .then(data => {
+  fetchCountries(value)
+  .then(data => {
       if (data.length > 10) {
         Notify.info(
           `Too many matches found. Please enter a more specific name.`
