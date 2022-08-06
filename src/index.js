@@ -2,8 +2,6 @@ import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
 import { debounce } from 'lodash';
 
-
-
 import './css/styles.css';
 import fetchCountries from './fetchCountries';
 
@@ -16,19 +14,39 @@ const countryInfo = document.querySelector('.country-info');
 const onInputChange = (e) => {
     e.preventDefault()
 
-    refs.countryList.innerHTML = ''
+    countryList.innerHTML = ''
 
     const inputValue = e.target.value;
 
     if(inputValue){
-        fetchCountries(search-box.trim()).then(data => updateMarkup(data)).catch(error => console.log('error'))
+        fetchCountries(inputValue.trim())
+        .then(data => updateMarkup(data))
+        .catch(error => console.log('error'))
     }
 }
+searchBox.addEventListener('input', debounce(onInputChange, 500))
 
 function updateMarkup (data) {
 const markup = templates(data)
 
 if(!data.length) {
-    error({ })
+    error({ 
+        text: `Please enter a more specific query!`,
+        styling:'brighttheme',
+        delay: 500,
+    })
+    return
 }
+if(data && data.length >= 5) {
+    error ({
+        title: `Too many matches found.`,
+        text: `We found ${data.length} countries. Please enter a more specific query!`,
+        styling:'brighttheme',
+        delay: 500,
+    })
+    return data.forEach(country => countryList.innerHTML += `<li>${country.name}</li>`);  
+    };
+    if(data.length === 1 ) {
+        countryList.insertAjacentHTML('afterbegin', markup)
+    }
 }

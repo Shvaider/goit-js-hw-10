@@ -1,5 +1,5 @@
 const fetchCountries = (name) => {
-    const DATA_URL = 'https://restcountries.com/v3.1/name/{name}'
+    const DATA_URL = 'https://restcountries.com/v3.1/name/'
     let url = `${DATA_URL}${name}`
     return fetch(url)
     .then(response => response.json())
