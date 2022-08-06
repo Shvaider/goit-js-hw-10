@@ -1,6 +1,5 @@
-import Notiflix, { Notify } from 'notiflix';
-import 'notiflix/dist/notiflix-3.2.5.min.css';
-import { debounce } from 'lodash';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import debounce from 'lodash.debounce';
 import { generateContentList } from './js/markupList';
 
 import './css/styles.css';
